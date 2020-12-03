@@ -61,7 +61,7 @@ while True:
             
         
         
-    flag=False
+    flagFace=False
     flaNose=False
     flaMouth=False
 
