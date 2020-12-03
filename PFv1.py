@@ -19,16 +19,22 @@ while True:
     ret, frame = cap.read()
     frame = cv2.resize(frame, None, fx=ds_factor, fy=ds_factor, interpolation=cv2.INTER_AREA)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
+    
+    #faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    #for (x,y,w,h) in faces:
+        #img = cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+        #roi_gray = gray[y:y+h, x:x+w]
+        #roi_color = img[y:y+h, x:x+w]
+            
     mouth_rects = mouth_cascade.detectMultiScale(gray, 1.7, 11)
-    for (x,y,w,h) in mouth_rects:
-        y = int(y - 0.15*h)
-        cv2.rectangle(frame, (x,y), (x+w,y+h), (0,255,0), 3)
+    for (xm,ym,wm,hm) in mouth_rects:
+        ym = int(ym - 0.15*hm)
+        cv2.rectangle(frame, (xm,ym), (xm+wm,ym+hm), (0,255,0), 3)
         break
     
     nose_rects = nose_cascade.detectMultiScale(gray, 1.3, 5)
-    for (x,y,w,h) in nose_rects:
-        cv2.rectangle(frame, (x,y), (x+w,y+h), (0,255,0), 3)
+    for (xn,yn,wn,hn) in nose_rects:
+        cv2.rectangle(frame, (xn,yn), (xn+wn,yn+hn), (0,255,0), 3)
         break
 
     cv2.imshow('Mouth & Nose Detector', frame)
